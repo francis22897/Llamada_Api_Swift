@@ -37,4 +37,6 @@ struct Character {
     static var genre = ""
     static var origin = ""
     static var location = ""
+    static var episodes: [String] = []
+    static var episodesData: [[String:Any]] = []
 }

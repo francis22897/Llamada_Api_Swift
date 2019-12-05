@@ -109,6 +109,8 @@ class ViewController: UICollectionViewController {
             Character.genre = AppData.filteredCharacters[indexPath.row]["gender"] as! String
             let origin = AppData.filteredCharacters[indexPath.row]["origin"] as! [String:Any]
             Character.origin = origin["name"] as! String
+            
+            Character.episodes = AppData.filteredCharacters[indexPath.row]["episode"] as! [String]
 
             let location = AppData.filteredCharacters[indexPath.row]["location"] as! [String:Any]
             Character.location = location["name"] as! String
@@ -123,6 +125,8 @@ class ViewController: UICollectionViewController {
 
             let location = AppData.data[indexPath.row]["location"] as! [String:Any]
             Character.location = location["name"] as! String
+            
+            Character.episodes = AppData.data[indexPath.row]["episode"] as! [String]
         }
 
         self.performSegue(withIdentifier: "mySegue", sender: self)

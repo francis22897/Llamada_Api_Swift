@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CharacterViewController: UIViewController {
+class CharacterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var locLabel: UILabel!
@@ -17,6 +17,7 @@ class CharacterViewController: UIViewController {
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var specieLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         
@@ -34,6 +35,36 @@ class CharacterViewController: UIViewController {
         genreLabel.text = Character.genre
         originLabel.text = Character.origin
         locLabel.text = Character.location
+        
+        for url in Character.episodes {
+            downloadData(urlApi: url)
+        }
+        
+    }
+    
+    func downloadData(urlApi: String){
+        let urlString = urlApi
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            guard let data = data else { return }
+
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+                Character.episodesData.append(json)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            } catch let jsonError {
+                print(jsonError)
+            }
+
+        }.resume()
     }
     
     @IBAction func shareAction(_ sender: Any) {
@@ -50,6 +81,29 @@ class CharacterViewController: UIViewController {
 
         }
         
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Character.episodes.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TableCell
+        
+        if Character.episodesData.count == Character.episodes.count {
+            cell.episodeLabel.text = "\(Character.episodesData[indexPath.row]["name"] as! String) -> \(Character.episodesData[indexPath.row]["episode"] as! String)"
+        }
+        
+        return cell
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
