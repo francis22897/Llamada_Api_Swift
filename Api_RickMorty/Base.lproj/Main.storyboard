@@ -17,12 +17,61 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BHa-ZS-8a2" kind="relationship" relationship="rootViewController" id="MKz-Ui-hXK"/>
+                        <segue destination="awB-Yb-DV0" kind="relationship" relationship="rootViewController" id="A24-XL-Sve"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Mx-2P-k2I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-601" y="222"/>
+            <point key="canvasLocation" x="-1458" y="223"/>
+        </scene>
+        <!--Planets View Controller-->
+        <scene sceneID="4wB-O0-uK9">
+            <objects>
+                <tableViewController id="awB-Yb-DV0" customClass="PlanetsViewController" customModule="Api_RickMorty" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="lfc-VE-Ji9">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="planetsCell" rowHeight="114" id="Zlh-qV-uQN" customClass="PlanetsTableCell" customModule="Api_RickMorty" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="114"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zlh-qV-uQN" id="9Kf-Og-Q2Q">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="114"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rlG-Nc-86y">
+                                            <rect key="frame" x="20" y="11" width="374" height="92"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rlG-Nc-86y" firstAttribute="top" secondItem="9Kf-Og-Q2Q" secondAttribute="topMargin" id="Jm2-sm-Bdr"/>
+                                        <constraint firstItem="rlG-Nc-86y" firstAttribute="leading" secondItem="9Kf-Og-Q2Q" secondAttribute="leadingMargin" id="PJb-2h-pLL"/>
+                                        <constraint firstItem="rlG-Nc-86y" firstAttribute="trailing" secondItem="9Kf-Og-Q2Q" secondAttribute="trailingMargin" id="PNo-sF-LK1"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="rlG-Nc-86y" secondAttribute="bottom" id="sFh-6N-hM4"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="rlG-Nc-86y" id="YIw-K9-K1w"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="awB-Yb-DV0" id="TCQ-yA-wGv"/>
+                            <outlet property="delegate" destination="awB-Yb-DV0" id="ga0-um-2W7"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Es5-8G-G19"/>
+                    <connections>
+                        <segue destination="BHa-ZS-8a2" kind="show" identifier="charactersSegue" id="11b-PR-i77"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kV3-Po-yfJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-633.33333333333337" y="226.33928571428569"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="DJh-sy-oVy">
@@ -247,16 +296,23 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="PUk-2R-yDq">
-                        <barButtonItem key="leftBarButtonItem" title="Compartir URL" id="VD0-2t-24y">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="Tbn-Ff-LDt">
                             <connections>
-                                <action selector="shareURLAction:" destination="X90-jH-tE9" id="L0T-fd-3cl"/>
+                                <segue destination="BHa-ZS-8a2" kind="show" id="MRI-sI-HP6"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.arrow.up" catalog="system" id="F4S-JC-rwf">
-                            <connections>
-                                <action selector="shareAction:" destination="X90-jH-tE9" id="RGg-Xc-tt0"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="square.and.arrow.up" catalog="system" id="F4S-JC-rwf">
+                                <connections>
+                                    <action selector="shareAction:" destination="X90-jH-tE9" id="RGg-Xc-tt0"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Compartir URL" id="VD0-2t-24y">
+                                <connections>
+                                    <action selector="shareURLAction:" destination="X90-jH-tE9" id="L0T-fd-3cl"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -279,4 +335,7 @@
     <resources>
         <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="11b-PR-i77"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -24,39 +24,41 @@ class ViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.hideKeyboardWhenTappedAround()
         initializeSearchController()
         searchController.searchBar.scopeButtonTitles = AppData.categorys
         searchController.searchBar.delegate = self
-        downloadData()
-    }
-    
-    func downloadData(){
-        let urlString = "\(AppData.Domains.url)"
-        guard let url = URL(string: urlString) else { return }
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print(error!.localizedDescription)
-            }
-            guard let data = data else { return }
-
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
-                AppData.data = json["results"] as! [[String : Any]]
-                
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-                
-            } catch let jsonError {
-                print(jsonError)
-            }
-
-        }.resume()
+        for url in Planets.planetsCharacters {
+            downloadCharacterData(urlApi: url)
+        }
     }
-
     
+    func downloadCharacterData(urlApi: String){
+             let urlString = urlApi
+             guard let url = URL(string: urlString) else { return }
+             
+             URLSession.shared.dataTask(with: url) { (data, response, error) in
+                 if error != nil {
+                     print(error!.localizedDescription)
+                 }
+                 guard let data = data else { return }
+
+                 do {
+                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+                   AppData.data.append(json)
+                     
+                     DispatchQueue.main.async {
+                         self.collectionView.reloadData()
+                     }
+                     
+                 } catch let jsonError {
+                     print(jsonError)
+                 }
+
+             }.resume()
+         }
+       
+   
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		73B52156239971C7006E90D4 /* TableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B52155239971C7006E90D4 /* TableCell.swift */; };
+		73B5215823999210006E90D4 /* PlanetsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B5215723999210006E90D4 /* PlanetsTableCell.swift */; };
+		73B5215A23999268006E90D4 /* PlanetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B5215923999268006E90D4 /* PlanetsViewController.swift */; };
 		73DB87492398266C00F20334 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DB87482398266C00F20334 /* AppDelegate.swift */; };
 		73DB874B2398266C00F20334 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DB874A2398266C00F20334 /* SceneDelegate.swift */; };
 		73DB874D2398266C00F20334 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73DB874C2398266C00F20334 /* ViewController.swift */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		73B52155239971C7006E90D4 /* TableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableCell.swift; sourceTree = "<group>"; };
+		73B5215723999210006E90D4 /* PlanetsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsTableCell.swift; sourceTree = "<group>"; };
+		73B5215923999268006E90D4 /* PlanetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetsViewController.swift; sourceTree = "<group>"; };
 		73DB87452398266C00F20334 /* Api_RickMorty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Api_RickMorty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73DB87482398266C00F20334 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		73DB874A2398266C00F20334 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 				73DB875E2398278300F20334 /* Global.swift */,
 				73DB876023983AC500F20334 /* CharacterViewController.swift */,
 				73B52155239971C7006E90D4 /* TableCell.swift */,
+				73B5215723999210006E90D4 /* PlanetsTableCell.swift */,
+				73B5215923999268006E90D4 /* PlanetsViewController.swift */,
 			);
 			path = Api_RickMorty;
 			sourceTree = "<group>";
@@ -150,7 +156,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73B5215823999210006E90D4 /* PlanetsTableCell.swift in Sources */,
 				73DB876123983AC500F20334 /* CharacterViewController.swift in Sources */,
+				73B5215A23999268006E90D4 /* PlanetsViewController.swift in Sources */,
 				73DB874D2398266C00F20334 /* ViewController.swift in Sources */,
 				73DB875D239826D100F20334 /* MyCell.swift in Sources */,
 				73B52156239971C7006E90D4 /* TableCell.swift in Sources */,

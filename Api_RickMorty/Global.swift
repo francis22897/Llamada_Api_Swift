@@ -46,3 +46,11 @@ struct Episode {
     static var episodeCharacters: [String] = []
     static var dataCharacters: [[String:Any]] = []
 }
+
+struct Planets {
+    static var url = "https://rickandmortyapi.com/api/location/"
+    static var data: [[String:Any]] = []
+    static var planetsCharacters: [String] = []
+    static var filteredPlanets: [[String:Any]] = []
+
+}
