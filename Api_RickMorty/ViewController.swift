@@ -20,13 +20,13 @@ class ViewController: UICollectionViewController {
     var isFiltering: Bool {
         return searchController.isActive && !isSearchBarEmpty
     }
-    
-    var filteredCharacters: [[String: Any]] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         initializeSearchController()
+        searchController.searchBar.scopeButtonTitles = AppData.categorys
+        searchController.searchBar.delegate = self
         downloadData()
     }
     
@@ -62,7 +62,7 @@ class ViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if isFiltering {
-            return filteredCharacters.count
+            return AppData.filteredCharacters.count
         } else {
             return AppData.data.count
         }
@@ -76,10 +76,10 @@ class ViewController: UICollectionViewController {
         
         
         if isFiltering {
-            cell.labelName.text = "Nombre: \(filteredCharacters[indexPath.row]["name"] as! String)"
-            cell.labelSpecie.text = "Especie: \(filteredCharacters[indexPath.row]["species"] as! String)"
+            cell.labelName.text = "Nombre: \(AppData.filteredCharacters[indexPath.row]["name"] as! String)"
+            cell.labelSpecie.text = "Especie: \(AppData.filteredCharacters[indexPath.row]["species"] as! String)"
             
-            urlImage = (filteredCharacters[indexPath.row]["image"] as? String)!
+            urlImage = (AppData.filteredCharacters[indexPath.row]["image"] as? String)!
             
         } else {
             cell.labelName.text = "Nombre: \(AppData.data[indexPath.row]["name"] as! String)"
@@ -102,15 +102,15 @@ class ViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if isFiltering {
-            Character.urlImage = filteredCharacters[indexPath.row]["image"] as! String
-            Character.name = filteredCharacters[indexPath.row]["name"] as! String
-            Character.specie = filteredCharacters[indexPath.row]["species"] as! String
-            Character.status = filteredCharacters[indexPath.row]["status"] as! String
-            Character.genre = filteredCharacters[indexPath.row]["gender"] as! String
-            let origin = filteredCharacters[indexPath.row]["origin"] as! [String:Any]
+            Character.urlImage = AppData.filteredCharacters[indexPath.row]["image"] as! String
+            Character.name = AppData.filteredCharacters[indexPath.row]["name"] as! String
+            Character.specie = AppData.filteredCharacters[indexPath.row]["species"] as! String
+            Character.status = AppData.filteredCharacters[indexPath.row]["status"] as! String
+            Character.genre = AppData.filteredCharacters[indexPath.row]["gender"] as! String
+            let origin = AppData.filteredCharacters[indexPath.row]["origin"] as! [String:Any]
             Character.origin = origin["name"] as! String
 
-            let location = filteredCharacters[indexPath.row]["location"] as! [String:Any]
+            let location = AppData.filteredCharacters[indexPath.row]["location"] as! [String:Any]
             Character.location = location["name"] as! String
         } else {
             Character.urlImage = AppData.data[indexPath.row]["image"] as! String
@@ -136,15 +136,40 @@ class ViewController: UICollectionViewController {
         definesPresentationContext = true
     }
     
-    func filterContentForSearchText(_ searchText: String) {
-        self.filteredCharacters = AppData.data.filter { (character: [String:Any]) -> Bool in
+    func filterContentForSearchText(_ searchText: String, category: Int? = nil) {
+        AppData.filteredCharacters = AppData.data.filter { (character: [String:Any]) -> Bool in
             
-            let name = character["name"] as! String
-            if name.lowercased().localizedCaseInsensitiveContains(searchText) {
-                return true
-            } else {
-                return false
-            }
+            var result: Bool
+            
+            switch category {
+                case 0:
+                    
+                    let name = character["name"] as! String
+                    if name.lowercased().localizedCaseInsensitiveContains(searchText) {
+                        result =  true
+                    } else {
+                        result =  false
+                    }
+                case 1:
+
+                    let gender = character["gender"] as! String
+                    if gender.lowercased().localizedCaseInsensitiveContains(searchText) {
+                        result = true
+                    } else {
+                        result = false
+                    }
+                case 2:
+                    
+                    let specie = character["species"] as! String
+                    if specie.lowercased().localizedCaseInsensitiveContains(searchText) {
+                        result = true
+                    } else {
+                        result =  false
+                    }
+                default:
+                    result = false
+                }
+            return result
         }
       
         self.collectionView.reloadData()
@@ -153,9 +178,17 @@ class ViewController: UICollectionViewController {
 }
 
 extension ViewController: UISearchResultsUpdating {
-    public func updateSearchResults(for searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        filterContentForSearchText(searchBar.text!)
+        let category = searchBar.selectedScopeButtonIndex
+        filterContentForSearchText(searchBar.text!, category: category)
     }
+}
+
+extension ViewController: UISearchBarDelegate {
+  func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+    let category = selectedScope
+    filterContentForSearchText(searchBar.text!, category: category)
+  }
 }
 

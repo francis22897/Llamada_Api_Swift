@@ -25,6 +25,8 @@ struct AppData {
         static let url = "https://rickandmortyapi.com/api/character/"
     }
     static var data: [[String:Any]] = []
+    static var filteredCharacters: [[String: Any]] = []
+    static var categorys: [String] = ["Nombre", "Sexo", "Especie"]
 }
 
 struct Character {
