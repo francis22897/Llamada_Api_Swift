@@ -53,7 +53,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    @available(iOS 13.0, *)
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        
+        if let url = URLContexts.first?.url {
+            let  message = url.host?.removingPercentEncoding
+            if message != nil {
+                
+                let urlString = "\(AppData.Domains.url)\(message!)"
+                guard let url = URL(string: urlString) else { return }
+                
+                URLSession.shared.dataTask(with: url) { (data, response, error) in
+                    if error != nil {
+                        print(error!.localizedDescription)
+                    }
+                    guard let data = data else { return }
 
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+                        Character.id = "\(json["id"]!)"
+                        Character.urlImage = json["image"] as! String
+                        Character.name = json["name"] as! String
+                        Character.specie = json["species"] as! String
+                        Character.status = json["status"] as! String
+                        Character.genre = json["gender"] as! String
+                        let origin = json["origin"] as! [String:Any]
+                        Character.origin = origin["name"] as! String
+                        let location = json["location"] as! [String:Any]
+                        Character.location = location["name"] as! String
+                        Character.episodes = json["episode"] as! [String]
+                        
+                        DispatchQueue.main.async {
+                        
+                            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let page = mainStoryboard.instantiateViewController(withIdentifier: "cvc") as! CharacterViewController
+                            let rootViewController = self.window!.rootViewController as! UINavigationController
+                            rootViewController.pushViewController(page, animated: true)
+                        }
+                        
+                    } catch let jsonError {
+                        print(jsonError)
+                    }
 
+                }.resume()
+                
+            }
+        }
+    }
 }
-

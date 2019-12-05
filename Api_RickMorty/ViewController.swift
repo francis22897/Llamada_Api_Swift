@@ -23,6 +23,7 @@ class ViewController: UICollectionViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.hideKeyboardWhenTappedAround()
         initializeSearchController()
         searchController.searchBar.scopeButtonTitles = AppData.categorys
@@ -102,6 +103,7 @@ class ViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if isFiltering {
+            Character.id = "\(AppData.filteredCharacters[indexPath.row]["id"]!)"
             Character.urlImage = AppData.filteredCharacters[indexPath.row]["image"] as! String
             Character.name = AppData.filteredCharacters[indexPath.row]["name"] as! String
             Character.specie = AppData.filteredCharacters[indexPath.row]["species"] as! String
@@ -115,6 +117,7 @@ class ViewController: UICollectionViewController {
             let location = AppData.filteredCharacters[indexPath.row]["location"] as! [String:Any]
             Character.location = location["name"] as! String
         } else {
+            Character.id = "\(AppData.data[indexPath.row]["id"]!)"
             Character.urlImage = AppData.data[indexPath.row]["image"] as! String
             Character.name = AppData.data[indexPath.row]["name"] as! String
             Character.specie = AppData.data[indexPath.row]["species"] as! String

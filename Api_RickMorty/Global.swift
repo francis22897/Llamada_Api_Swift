@@ -30,6 +30,7 @@ struct AppData {
 }
 
 struct Character {
+    static var id = ""
     static var urlImage = ""
     static var name = ""
     static var specie = ""

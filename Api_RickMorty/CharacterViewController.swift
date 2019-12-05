@@ -114,6 +114,19 @@ class CharacterViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
+    @IBAction func shareURLAction(_ sender: Any) {
+
+        if let url = NSURL(string: "Api://\(Character.id)") {
+            
+            let arrayParaCompartir: [Any] = [url]
+            
+            let activityVC = UIActivityViewController(activityItems: arrayParaCompartir, applicationActivities: nil)
+                   
+            activityVC.popoverPresentationController?.sourceView = sender as? UIView
+            self.present(activityVC, animated: true, completion: nil)
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

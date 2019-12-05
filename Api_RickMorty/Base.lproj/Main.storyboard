@@ -247,6 +247,11 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="PUk-2R-yDq">
+                        <barButtonItem key="leftBarButtonItem" title="Compartir URL" id="VD0-2t-24y">
+                            <connections>
+                                <action selector="shareURLAction:" destination="X90-jH-tE9" id="L0T-fd-3cl"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.arrow.up" catalog="system" id="F4S-JC-rwf">
                             <connections>
                                 <action selector="shareAction:" destination="X90-jH-tE9" id="RGg-Xc-tt0"/>
