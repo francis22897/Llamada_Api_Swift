@@ -140,7 +140,13 @@
                             <outlet property="delegate" destination="BHa-ZS-8a2" id="cme-BL-Tv0"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="UEa-ym-4x4"/>
+                    <navigationItem key="navigationItem" id="UEa-ym-4x4">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="hTs-gM-fR3">
+                            <connections>
+                                <segue destination="awB-Yb-DV0" kind="show" id="jDM-wj-dkV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="X90-jH-tE9" kind="show" identifier="mySegue" id="Wdx-8b-dn8"/>
                     </connections>
@@ -337,5 +343,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="11b-PR-i77"/>
+        <segue reference="A24-XL-Sve"/>
     </inferredMetricsTieBreakers>
 </document>

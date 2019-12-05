@@ -23,7 +23,8 @@ class ViewController: UICollectionViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AppData.data = []
+        self.navigationItem.hidesBackButton = true
         initializeSearchController()
         searchController.searchBar.scopeButtonTitles = AppData.categorys
         searchController.searchBar.delegate = self
@@ -44,12 +45,12 @@ class ViewController: UICollectionViewController {
                  guard let data = data else { return }
 
                  do {
-                     let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
-                   AppData.data.append(json)
+                    let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+                    AppData.data.append(json)
                      
-                     DispatchQueue.main.async {
-                         self.collectionView.reloadData()
-                     }
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
                      
                  } catch let jsonError {
                      print(jsonError)

@@ -21,6 +21,7 @@ class PlanetsViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        self.navigationItem.hidesBackButton = true
         initializeSearchController()
         downloadPlanetsData()
     }
