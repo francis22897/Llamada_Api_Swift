@@ -40,3 +40,8 @@ struct Character {
     static var episodes: [String] = []
     static var episodesData: [[String:Any]] = []
 }
+
+struct Episode {
+    static var episodeCharacters: [String] = []
+    static var dataCharacters: [[String:Any]] = []
+}

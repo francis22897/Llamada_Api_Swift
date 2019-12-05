@@ -18,8 +18,14 @@ class CharacterViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var specieLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var titleTableLabel: UILabel!
     
     override func viewDidLoad() {
+        
+        titleTableLabel.text = "Episodios"
+        Episode.dataCharacters = []
+        Episode.episodeCharacters = []
+        Character.episodesData = []
         
         let url = URL(string: Character.urlImage)
                
@@ -37,12 +43,12 @@ class CharacterViewController: UIViewController, UITableViewDelegate, UITableVie
         locLabel.text = Character.location
         
         for url in Character.episodes {
-            downloadData(urlApi: url)
+            downloadEpisodeData(urlApi: url)
         }
         
     }
     
-    func downloadData(urlApi: String){
+    func downloadEpisodeData(urlApi: String){
         let urlString = urlApi
         guard let url = URL(string: urlString) else { return }
         
@@ -55,6 +61,31 @@ class CharacterViewController: UIViewController, UITableViewDelegate, UITableVie
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
                 Character.episodesData.append(json)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            } catch let jsonError {
+                print(jsonError)
+            }
+
+        }.resume()
+    }
+    
+    func downloadCharacterData(urlApi: String){
+        let urlString = urlApi
+        guard let url = URL(string: urlString) else { return }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            guard let data = data else { return }
+
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:Any]
+                Episode.dataCharacters.append(json)
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -88,15 +119,26 @@ class CharacterViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Character.episodes.count
+        if Episode.episodeCharacters.count > 0 {
+            return Episode.episodeCharacters.count
+        } else {
+            return Character.episodes.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath) as! TableCell
         
-        if Character.episodesData.count == Character.episodes.count {
-            cell.episodeLabel.text = "\(Character.episodesData[indexPath.row]["name"] as! String) -> \(Character.episodesData[indexPath.row]["episode"] as! String)"
+        
+        if(Episode.episodeCharacters.count > 0){
+            if Episode.episodeCharacters.count == Episode.dataCharacters.count {
+                cell.episodeLabel.text = (Episode.dataCharacters[indexPath.row]["name"] as! String)
+            }
+        } else {
+            if Character.episodesData.count == Character.episodes.count {
+                cell.episodeLabel.text = "\(Character.episodesData[indexPath.row]["name"] as! String) -> \(Character.episodesData[indexPath.row]["episode"] as! String)"
+            }
         }
         
         return cell
@@ -106,4 +148,20 @@ class CharacterViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        if Episode.episodeCharacters.count == 0 {
+            titleTableLabel.text = "Personajes"
+            Episode.episodeCharacters = Character.episodesData[indexPath.row]["characters"] as! [String];
+            
+            for url in Episode.episodeCharacters {
+                downloadCharacterData(urlApi: url)
+            }
+            
+        }
+        
+    }
+   
 }

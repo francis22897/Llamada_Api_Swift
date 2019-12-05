@@ -231,7 +231,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Episodios:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DKF-0a-0I9">
-                                <rect key="frame" x="20" y="416" width="79" height="21"/>
+                                <rect key="frame" x="20" y="416" width="372" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -263,6 +263,7 @@
                         <outlet property="specieLabel" destination="132-NM-wIj" id="kdT-B3-kb6"/>
                         <outlet property="statusLabel" destination="L2K-Cd-GtH" id="5Wu-ke-bPM"/>
                         <outlet property="tableView" destination="51O-fz-Aef" id="dC1-xZ-5V2"/>
+                        <outlet property="titleTableLabel" destination="DKF-0a-0I9" id="7WM-rS-N5l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IK2-em-N2M" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
